@@ -18,6 +18,7 @@ func InitBot(token string) (*Bot, error) {
 	if err != nil {
 		log.Fatalf("Bot startup failed %s", err)
 	}
+	dg.ShouldReconnectOnError = true
 	bot := &Bot{session: dg, channelIds: map[string]string{}}
 
 	dg.AddHandler(func(_ *discordgo.Session, _ *discordgo.Ready) {
