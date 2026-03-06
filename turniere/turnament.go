@@ -18,4 +18,5 @@ type Phase struct {
 	Title                 string
 	RegistrationStartDate time.Time
 	Requirements          map[string]string
+	Notified              bool
 }

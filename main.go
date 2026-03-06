@@ -130,12 +130,13 @@ func maybeSendMessages() {
 	now := time.Now()
 	for _, t := range turnaments {
 		if t.RegistrationStartDate != nil {
-			for _, p := range t.Phases {
+			for i := range t.Phases {
+				p := &t.Phases[i]
 				d := p.RegistrationStartDate.Sub(now)
-				if d < notificationOffset && d > notificationOffset-schduleInterval {
+				if d < notificationOffset && d > 0 && !p.Notified {
 					text := "⏰ Turnieranmeldung für \"**%s**\"\n%s\nöffnet **heute um %s Uhr**\n📍 %s\n🔗 %s"
 					bot.SendMessage(fmt.Sprintf(text, t.Title, p.Title, p.RegistrationStartDate.Format("15:04"), t.Location, t.Link))
-					//fmt.Printf(text, t.Title, p.Title, p.RegistrationStartDate.Format("15:04"), t.Location, t.Link)
+					p.Notified = true
 				}
 			}
 		}
